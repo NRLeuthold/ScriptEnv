@@ -1,0 +1,30 @@
+-----------------------------------------------------------------
+SSH
+-edit /etc/ssh/sshd_config
+	-PermitRootLogin no
+	-Protocol 2
+
+-----------------------------------------------------------------
+Passwords
+-edit /etc/login.defs
+	-PASS_MAX_DAYS 90
+	-PASS_MIN_DAYS 30
+	-PASS_WARN_AGE 83
+	-LOGIN_RETRIES 5
+	-LOGIN_TIMEOUT 1800
+	-ENCRYPT_METHOD SHA512
+-edit /etc/pam.d/common-password
+	-Find "password requisite pam_cracklib.so"
+	-Then add the following in order after retry:
+		-minlen=15
+		-dcredit=-1
+		-ucredit=-1
+		-lcredit=-1
+		-ocredit=-1
+		-difok=8
+
+-----------------------------------------------------------------
+Port Scan
+-#apt-get install nmap
+-#ifconfig
+-#nmap -A [ip]
